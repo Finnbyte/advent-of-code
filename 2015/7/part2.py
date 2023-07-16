@@ -52,11 +52,14 @@ def get_instructions():
         return [line.strip() for line in f.readlines()]
 
 
-def resolve_instructions(instructions):
+def resolve_instructions(part: int, wires, instructions):
     failures = []  # List to keep track of wires with missing signals
 
     for instruction in instructions:
         (val, target) = process_instruction(wires, instruction)
+
+        if part == 2 and target == "b":
+            continue
 
         if val is not None:
             wires[target] = min(int(val), 65535)
@@ -68,7 +71,17 @@ def resolve_instructions(instructions):
 
 instructions = get_instructions()
 while instructions:
-    failures = resolve_instructions(instructions)
+    failures = resolve_instructions(1, wires, instructions)
+    if not failures:
+        break
+    instructions = failures
+
+value_of_a = wires["a"]
+wires = {"b": value_of_a}
+
+instructions = get_instructions()
+while instructions:
+    failures = resolve_instructions(2, wires, instructions)
     if not failures:
         break
     instructions = failures
