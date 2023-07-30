@@ -29,12 +29,9 @@ type Outcome =
 
 let outcome (opponent: Shape) (instruction: char) : int =
     match instruction with 
-    | 'Y' -> 
-        opponent.Value + int Outcome.Tie
-    | 'X' -> 
-        opponent.wins.Value + int Outcome.Lose
-    | 'Z' ->
-        opponent.loses.Value + int Outcome.Win
+    | 'Y' -> opponent.Value + int Outcome.Tie
+    | 'X' -> opponent.wins.Value + int Outcome.Lose
+    | 'Z' -> opponent.loses.Value + int Outcome.Win
     | _ -> 0
 
 let data: string list = readLines "input.txt" |> Seq.toList
